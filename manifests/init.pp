@@ -81,9 +81,7 @@ class mediawiki (
     $proxy_include = "-x ${proxy_url}"
   }
 
-  package { $mediawiki::params::packages:
-    ensure  => $package_ensure,
-  }
+  ensure_packages($mediawiki::params::packages, { ensure => $package_ensure })
   Package[$mediawiki::params::packages] ~> Service<| title == $mediawiki::params::apache |>
 
   # Make sure the directories and files common for all instances are included
