@@ -114,7 +114,7 @@ class mediawiki (
   if $manage_memcached {
     class { '::memcached':
       max_memory      => $max_memory,
-      max_connections => '1024',
+      max_connections => 1024,
     }
   }
 }
