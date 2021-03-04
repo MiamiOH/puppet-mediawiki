@@ -58,6 +58,7 @@ define mediawiki::instance (
   $smtp_auth              = undef,
   $smtp_username          = undef,
   $smtp_password          = undef,
+  $version                = '1.26.2',
   $apache_user            = $mediawiki::params::apache_user,
 ) {
 
@@ -137,10 +138,17 @@ define mediawiki::instance (
         ensure => directory,
       }
 
-      # MediaWiki DefaultSettings
-      file { "${mediawiki_conf_dir}/${name}/includes/DefaultSettings.php":
-        ensure  => present,
-        content => template('mediawiki/DefaultSettings.php.erb'),
+       # MediaWiki DefaultSettings
+      if $version == '1.35.1' {
+        file { "${mediawiki_conf_dir}/${name}/includes/DefaultSettings.php":
+          ensure  => present,
+          content => template('mediawiki/DefaultSettings-1.35.1.php.erb'),
+        }
+      }  elsif $version == '1.26.2' {
+        file { "${mediawiki_conf_dir}/${name}/includes/DefaultSettings.php":
+          ensure  => present,
+          content => template('mediawiki/DefaultSettings.php.erb'),
+        }
       }
 
       # Each instance needs a separate folder to upload images
