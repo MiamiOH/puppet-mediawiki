@@ -1,8 +1,12 @@
 == Mediawiki module for Puppet ==
 
+== MiamiOH fork ==
+
+Works to install newer versions and updated security requirements.
+
 === NexusIS' fork ===
 
-This fork brings the module up to date with latest dependency modules as well as adds a Type and Provider for MediaWiki Extensions.  
+This fork brings the module up to date with latest dependency modules as well as adds a Type and Provider for MediaWiki Extensions.
 
 === hexmode's fork ===
 
@@ -27,21 +31,23 @@ First, install the mediawiki package which will be used by all wiki instances:
 Next, create an individual wiki instance:
 
   mediawiki::instance { 'my_wiki1':
-    db_password => 'super_long_password',
-    db_name     => 'wiki1',
-    db_user     => 'wiki1_user',
-    port        => '80',
-    ensure      => 'present'
+    db_password     => 'super_long_password',
+    db_name         => 'wiki1',
+    db_user         => 'wiki1_user',
+    port            => '80',
+    wiki_admin_pass => 'supersecret',
+    ensure          => 'present'
   }
 
 Using this module, one can create multiple independent wiki instances. To create another wiki instance, add the following puppet code:
 
   mediawiki::instance { 'my_wiki2':
-    db_password => 'another_super_long_password',
-    db_name     => 'another_wiki',
-    db_user     => 'another_wiki_user'
-    port        => '80',
-    ensure      => 'present'
+    db_password     => 'another_super_long_password',
+    db_name         => 'another_wiki',
+    db_user         => 'another_wiki_user'
+    port            => '80',
+    wiki_admin_pass => 'supersecret2',
+    ensure          => 'present'
   }
 
 You can now also manage Extensions:
