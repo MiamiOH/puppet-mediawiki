@@ -42,7 +42,7 @@ define mediawiki::instance (
   $db_name                = $name,
   $db_user                = "${name}_user",
   $db_prefix              = 'wk',
-  $db_admin_pass          = undef,
+  $wiki_admin_pass        = undef,
   $ip                     = '*',
   $port                   = '80',
   $sslport                = '443',
@@ -67,8 +67,8 @@ define mediawiki::instance (
   "${ensure} is not supported for ensure.
   Allowed values are 'present', 'absent', and 'deleted'.")
   
-  if ($db_admin_pass == undef) or (length($db_admin_pass) < 10){
-      fail('db_admin_pass is undefined or it must be be at least 10 characters long.')
+  if ($wiki_admin_pass == undef) or (length($wiki_admin_pass) < 10){
+      fail('wiki_admin_pass is undefined or it must be be at least 10 characters long.')
   }
 
   include ::mediawiki::params
@@ -104,7 +104,7 @@ define mediawiki::instance (
       exec { "${name}-install_script":
         cwd       => "${mediawiki_install_path}/maintenance",
         command   => "/usr/bin/php install.php                   \
-                        --pass ${db_admin_pass}                  \
+                        --pass ${wiki_admin_pass}                \
                         --server http://${server_name}           \
                         --scriptpath /${name}                    \
                         --dbtype mysql                           \
